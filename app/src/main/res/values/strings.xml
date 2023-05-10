@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">DiscountsModifier</string>
+    <string name="off_btn_inform">This app adds a discount if the total is more than $10.</string>
+</resources>

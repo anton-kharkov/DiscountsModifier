@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:name=".DiscountsModifierApp"
+        android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.DiscountsModifier"
+        tools:targetApi="25">
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.DiscountsModifier">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".service.OrderListenerService"
+            android:enabled="true"
+            android:exported="true"
+            android:permission="android.permission.GET_ACCOUNTS" />
+
+        <receiver
+            android:name=".receiver.OrderBroadcastReceiver"
+            android:exported="true"
+            android:permission="android.permission.GET_ACCOUNTS">
+            <intent-filter>
+                <action android:name="com.clover.intent.action.LINE_ITEM_ADDED" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+</manifest>
