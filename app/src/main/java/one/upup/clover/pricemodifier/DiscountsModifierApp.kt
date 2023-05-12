@@ -3,6 +3,7 @@ package one.upup.clover.pricemodifier
 import android.app.Application
 import android.content.Intent
 import one.upup.clover.pricemodifier.di.module.accountConnectorModule
+import one.upup.clover.pricemodifier.di.module.appModule
 import one.upup.clover.pricemodifier.service.OrderListenerService
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -16,7 +17,7 @@ class DiscountsModifierApp : Application() {
         startKoin {
             androidLogger()
             androidContext(this@DiscountsModifierApp)
-            modules(listOf(accountConnectorModule))
+            modules(listOf(accountConnectorModule, appModule))
         }
 
         startService(Intent(this, OrderListenerService::class.java))
