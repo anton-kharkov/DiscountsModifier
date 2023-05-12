@@ -29,15 +29,6 @@
             android:enabled="true"
             android:exported="true"
             android:permission="android.permission.GET_ACCOUNTS" />
-
-        <receiver
-            android:name=".receiver.OrderBroadcastReceiver"
-            android:exported="true"
-            android:permission="android.permission.GET_ACCOUNTS">
-            <intent-filter>
-                <action android:name="com.clover.intent.action.LINE_ITEM_ADDED" />
-            </intent-filter>
-        </receiver>
     </application>
 
 </manifest>
