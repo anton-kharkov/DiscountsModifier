@@ -1,6 +1,5 @@
 package one.upup.clover.pricemodifier.discounts_control
 
-import android.util.Log
 import com.clover.sdk.v3.order.Discount
 import com.clover.sdk.v3.order.Order
 import com.clover.sdk.v3.order.OrderConnector
@@ -49,7 +48,7 @@ class DiscountsControl : IDiscountsControl, KoinComponent {
                     val discountIds = item.discounts
                         .filter { discount -> discount.name == DISCOUNT10 }
                         .map { it.id }
-                    Log.d("testTest", discountIds.toString())
+
                     orderConnector.deleteLineItemDiscounts(order.id, item.id, discountIds)
                 }
 

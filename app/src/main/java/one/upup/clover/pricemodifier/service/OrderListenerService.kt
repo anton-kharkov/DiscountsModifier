@@ -22,11 +22,13 @@ class OrderListenerService : Service(), OrderV31Connector.OnOrderUpdateListener2
     override fun onCreate() {
         super.onCreate()
         orderConnector.addOnOrderChangedListener(this)
+        orderConnector.connect()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         orderConnector.removeOnOrderChangedListener(this)
+        orderConnector.disconnect()
     }
 
     override fun onBind(intent: Intent?): IBinder? {
