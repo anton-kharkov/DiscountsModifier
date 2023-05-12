@@ -12,12 +12,14 @@ class MainActivity : AppCompatActivity() {
     private val orderListenerService: OrderListenerService by inject()
 
     private lateinit var binding: ActivityMainBinding
-    private val intentService = Intent(this, OrderListenerService::class.java)
+    private lateinit var intentService: Intent
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        intentService = Intent(this, OrderListenerService::class.java)
 
         startService(intentService)
     }
