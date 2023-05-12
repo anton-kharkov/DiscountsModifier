@@ -3,6 +3,7 @@ package one.upup.clover.pricemodifier.service
 import android.app.Service
 import android.content.Intent
 import android.os.IBinder
+import android.util.Log
 import com.clover.sdk.v3.order.OrderConnector
 import com.clover.sdk.v3.order.OrderV31Connector
 import kotlinx.coroutines.CoroutineScope
@@ -26,6 +27,7 @@ class OrderListenerService : Service(), OrderV31Connector.OnOrderUpdateListener2
     }
 
     override fun onDestroy() {
+        Log.d("Service_Off", "close")
         super.onDestroy()
         orderConnector.removeOnOrderChangedListener(this)
         orderConnector.disconnect()
