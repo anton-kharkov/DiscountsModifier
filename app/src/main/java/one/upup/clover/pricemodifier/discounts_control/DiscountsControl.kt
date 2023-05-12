@@ -1,6 +1,7 @@
 package one.upup.clover.pricemodifier.discounts_control
 
 import com.clover.sdk.v3.order.Discount
+import com.clover.sdk.v3.order.LineItem
 import com.clover.sdk.v3.order.Order
 import com.clover.sdk.v3.order.OrderConnector
 import org.koin.core.component.KoinComponent
@@ -18,33 +19,44 @@ class DiscountsControl : IDiscountsControl, KoinComponent {
     }
 
     private var totalPrice: Long = 0
+    private var itemList: List<LineItem> = listOf()
 
     override fun addDiscount(order: Order) {
-        totalPrice = order.lineItems.sumOf { it.price }
+        itemList = if (order.lineItems == null) {
+            listOf()
+        } else {
+            order.lineItems
+        }
+
+        totalPrice = itemList.sumOf { it.price }
 
         if (totalPrice >= 1000L) {
-            val itemsList = order.lineItems
-                .filter { item ->
-                    item.discounts.isNullOrEmpty() ||
-                            item.discounts?.any { it.name != DISCOUNT10 } ?: true
+            val itemListWithoutDiscount = itemList.filter { item ->
+                item.discounts.isNullOrEmpty() ||
+                        item.discounts?.any { it.name != DISCOUNT10 } ?: true
+            }
 
-                }
-
-            itemsList.forEach {
+            itemListWithoutDiscount.forEach {
                 orderConnector.addLineItemDiscount(order.id, it.id, discount)
             }
         }
     }
 
     override fun removeDiscount(order: Order) {
-        totalPrice = order.lineItems.sumOf { it.price }
+        itemList = if (order.lineItems == null) {
+            listOf()
+        } else {
+            order.lineItems
+        }
+
+        totalPrice = itemList.sumOf { it.price }
 
         if (totalPrice < 1000L) {
-            val itemList = order.lineItems.filter { it.discounts != null }
+            val itemListWithDiscount = itemList.filter { it.discounts != null }
 
-            if (itemList.isNotEmpty()) {
+            if (itemListWithDiscount.isNotEmpty()) {
 
-                itemList.forEach { item ->
+                itemListWithDiscount.forEach { item ->
                     val discountIds = item.discounts
                         .filter { discount -> discount.name == DISCOUNT10 }
                         .map { it.id }
